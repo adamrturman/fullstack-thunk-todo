@@ -7,7 +7,9 @@ interface Props {
 
 export default function ListItem({todo}: Props) {
 
+  const itemStyle = {textDecoration: todo.is_done ? 'line-through' : ''};
+
   return (
-    <li key={todo.id}>{todo.text}</li>
+    <li style={itemStyle} key={todo.id}>{todo.text}</li>
   );
 }

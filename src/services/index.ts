@@ -21,3 +21,15 @@ export const handleAdd = (task: string, setList: (list: Todo[]) => void, setTask
 export const handleChange = (event: React.ChangeEvent<HTMLInputElement>, setTask: (task: string) => void) => {
   setTask(event.target.value);
 }
+
+export const toggleComplete = (todo: Todo, setList: (list: Todo[]) => void) => {
+  axios.patch(API_URL + `/${todo.id}`, {
+    ...todo,
+    is_done: !todo.is_done
+  })
+    .then(() => fetchList(setList))
+    .catch((e) => console.error(e))
+}
+
+export const sortListById = (list: Todo[]) =>
+  list.sort((a, b) => a.id - b.id);

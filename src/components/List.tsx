@@ -3,6 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { DeleteButtonContainer } from "./DeleteButton";
 import ListItem from "./ListItem";
+import { ToggleCompleteButtonContainer } from "./ToggleCompleteButton";
+import { sortListById } from "../services";
 
 interface Props {
   list: Todo[];
@@ -10,9 +12,10 @@ interface Props {
 
 function List({list}: Props) {
 
-  const displayedTodos = list.map(todo => (
+  const displayedTodos = sortListById(list).map(todo => (
     <>
       <ListItem todo={todo} />
+      <ToggleCompleteButtonContainer todo={todo} />
       <DeleteButtonContainer todo={todo} />
     </>
   ));
