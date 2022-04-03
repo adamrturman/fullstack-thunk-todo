@@ -1,22 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
-import { CounterContainer } from './App';
+import { AppContainer } from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import { counterReducer } from "./reducers/counterReducer";
+import { listReducer } from "./reducers/listReducer";
 
 // @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(counterReducer, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(thunk)
-));
+const store = createStore(listReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(listReducer, /* preloadedState, */ composeEnhancers(
+//   applyMiddleware(thunk)
+// ));
 
 render(
   <Provider store={store}>
-    <CounterContainer/>
+    <AppContainer/>
   </Provider>,
   document.getElementById('root')
 );
