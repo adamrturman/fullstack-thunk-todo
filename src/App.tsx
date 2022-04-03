@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { connect } from "react-redux";
 import { Todo, TodoAction } from "./interfaces";
 import { Dispatch } from "redux";
-import { fetchList, handleAdd, handleChange } from "./services";
+import { fetchList } from "./services";
 import { ListContainer } from "./components/List";
+import { InputContainer } from "./components/Input";
 
 interface Props {
   setList: (list: Todo[]) => void;
 }
 
 function App({setList}: Props) {
-  const [task, setTask] = useState<string>('');
 
   useEffect(() => {
     fetchList(setList);
@@ -19,8 +19,7 @@ function App({setList}: Props) {
 
   return (
     <div>
-      <input onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, setTask)} value={task} />
-      <button onClick={() => handleAdd(task, setList, setTask)}>Click to add</button>
+      <InputContainer />
       <ListContainer />
     </div>
   );

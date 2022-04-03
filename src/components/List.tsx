@@ -1,15 +1,19 @@
 import { StoreState, Todo } from "../interfaces";
 import React from "react";
 import { connect } from "react-redux";
+import { DeleteButtonContainer } from "./DeleteButton";
+import ListItem from "./ListItem";
 
 interface Props {
   list: Todo[];
 }
+
 function List({list}: Props) {
 
   const displayedTodos = list.map(todo => (
     <>
-      <li key={todo.id}>{todo.text}</li>
+      <ListItem todo={todo} />
+      <DeleteButtonContainer todo={todo} />
     </>
   ));
 
