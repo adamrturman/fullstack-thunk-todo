@@ -9,10 +9,13 @@ import thunk from "redux-thunk";
 import { listReducer } from "./reducers/listReducer";
 
 // @ts-ignore
-const store = createStore(listReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const store = createStore(listReducer, /* preloadedState, */ composeEnhancers(
-//   applyMiddleware(thunk)
-// ));
+// const store = createStore(listReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());//
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// @ts-ignore
+const store = createStore(listReducer, /* preloadedState, */ composeEnhancers(
+  applyMiddleware(thunk)
+));
 
 render(
   <Provider store={store}>

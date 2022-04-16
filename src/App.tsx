@@ -7,10 +7,10 @@ import { InputContainer } from "./components/Input";
 function App() {
 
   return (
-    <div>
+    <>
       <InputContainer />
       <ListContainer />
-    </div>
+    </>
   );
 }
 
