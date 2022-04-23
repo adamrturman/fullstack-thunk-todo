@@ -4,19 +4,20 @@ import { connect } from "react-redux";
 import { DeleteButtonContainer } from "./DeleteButton";
 import ListItem from "./ListItem";
 import { ToggleCompleteButtonContainer } from "./ToggleCompleteButton";
-import { fetchList, sortListById } from "../services";
+import { sortListById } from "../services";
+import { fetchList } from "../middleware/index";
 import { Dispatch } from "redux";
 
 interface Props {
   list: Todo[];
-  setList: (list: Todo[]) => void;
+  setList: () => void;
 }
 
 function List({list, setList}: Props) {
 
 
   useEffect(() => {
-    fetchList(setList);
+    setList();
   }, []);
 
   const displayedTodos = sortListById(list).map(todo => (
@@ -38,10 +39,8 @@ const mapStateToProps = (state: StoreState) => ({
 
 
 const mapDispatchToProps = (dispatch: Dispatch<TodoAction>) => ({
-  setList: (list: Todo[]) => dispatch({
-    type: 'SET_LIST',
-    payload: list
-  })
+  // @ts-ignore
+  setList: () => dispatch(fetchList())
 });
 
 

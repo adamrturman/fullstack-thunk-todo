@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { render } from 'react-dom'
 import './index.css';
 import { AppContainer } from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,6 +8,8 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { listReducer } from "./reducers/listReducer";
 
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // @ts-ignore
 const store = createStore(listReducer, /* preloadedState, */ composeEnhancers(
   applyMiddleware(thunk)

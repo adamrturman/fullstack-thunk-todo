@@ -2,20 +2,19 @@ import React from "react";
 import { Todo, TodoAction } from "../interfaces";
 import axios from "axios";
 import { API_URL } from "../constants";
-import { fetchList } from "../services";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { fetchList } from "../middleware";
 
 interface Props {
-  setList: (list: Todo[]) => void;
   todo: Todo;
 }
 
-function DeleteButton({setList, todo}: Props) {
+function DeleteButton({todo}: Props) {
 
   const handleDelete = (todo: Todo) => {
     axios.delete(API_URL.concat(`/${todo.id}`))
-      .then(() => fetchList(setList))
+      .then(() => fetchList())
       .catch((e) => console.error(e))
   }
 
@@ -25,10 +24,8 @@ function DeleteButton({setList, todo}: Props) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<TodoAction>) => ({
-  setList: (list: Todo[]) => dispatch({
-    type: 'SET_LIST',
-    payload: list
-  })
+  // @ts-ignore
+  setList: () => dispatch(fetchList())
 })
 
 export const DeleteButtonContainer = connect(
