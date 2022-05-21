@@ -1,28 +1,21 @@
-import { Todo, TodoAction } from "../interfaces";
-import { toggleComplete } from "../services";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
+import { Todo } from "../interfaces";
+import { useDispatch } from "react-redux";
+import { toggleComplete } from "../middleware";
 
 interface Props {
-  setList: (list: Todo[]) => void;
   todo: Todo;
 }
 
-function ToggleCompleteButton({setList, todo}: Props) {
+export default function ToggleCompleteButton({todo}: Props) {
+
+  const dispatch = useDispatch();
+
+  function handleToggleComplete() {
+    dispatch(toggleComplete(todo));
+  }
 
   return (
-    <button onClick={() => toggleComplete(todo, setList)}>Toggle Complete</button>
+    <button onClick={handleToggleComplete}>Toggle Complete</button>
   );
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<TodoAction>) => ({
-  setList: (list: Todo[]) => dispatch({
-    type: 'SET_LIST',
-    payload: list
-  })
-})
-
-export const ToggleCompleteButtonContainer = connect(
-  null,
-  mapDispatchToProps
-)(ToggleCompleteButton);

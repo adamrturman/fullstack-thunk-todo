@@ -1,30 +1,29 @@
-import { StoreState, Todo, TodoAction } from "../interfaces";
+import { StoreState, Todo } from "../interfaces";
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { DeleteButtonContainer } from "./DeleteButton";
+import { connect, useDispatch } from "react-redux";
 import ListItem from "./ListItem";
-import { ToggleCompleteButtonContainer } from "./ToggleCompleteButton";
 import { sortListById } from "../services";
-import { fetchList } from "../middleware/index";
-import { Dispatch } from "redux";
+import { fetchList } from "../middleware";
+import ToggleCompleteButton from "./ToggleCompleteButton";
+import { DeleteButton } from "./DeleteButton";
 
 interface Props {
   list: Todo[];
-  setList: () => void;
 }
 
-function List({list, setList}: Props) {
+function List({list}: Props) {
 
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setList();
+    dispatch(fetchList());
   }, []);
 
   const displayedTodos = sortListById(list).map(todo => (
     <>
       <ListItem todo={todo} />
-      <ToggleCompleteButtonContainer todo={todo} />
-      <DeleteButtonContainer todo={todo} />
+      <ToggleCompleteButton todo={todo} />
+      <DeleteButton todo={todo} />
     </>
   ));
 
@@ -37,14 +36,7 @@ const mapStateToProps = (state: StoreState) => ({
   list: state.list
 });
 
-
-const mapDispatchToProps = (dispatch: Dispatch<TodoAction>) => ({
-  // @ts-ignore
-  setList: () => dispatch(fetchList())
-});
-
-
 export const ListContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  () => ({})
 )(List);
